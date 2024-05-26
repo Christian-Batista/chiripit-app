@@ -24,7 +24,7 @@ class BasicLoginRequestValidator extends FormRequest
     {
         return [
             'email' => 'required|email|exists:users,email',
-            "password" => "required|string"
+            "password" => "required|string",
         ];
     }
 
@@ -33,7 +33,7 @@ class BasicLoginRequestValidator extends FormRequest
         return [
             "email.required" => Errors::EMAIL_REQUIRED,
             "email.email" => Errors::EMAIL_TYPE,
-            "email.exists" => Errors::EMAIL_EXISTS,
+            "email.exists" => Errors::EMAIL_UNIQUE,
 
             "password.required" => Errors::PASSWORD_REQUIRED,
             "password.string" => Errors::PASSWORD_STRING

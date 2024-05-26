@@ -27,7 +27,8 @@ class BasicRegisterRequestValidator extends FormRequest
             "name" => "required|string",
             "last_name" => "required|string",
             "email" => "required|email|unique:users,email",
-            "password" => "required|string"
+            "password" => "required|string",
+            "confirm_password" => "required|string|same:password"
         ];
     }
 
@@ -48,7 +49,12 @@ class BasicRegisterRequestValidator extends FormRequest
             "email.unique" => Errors::EMAIL_UNIQUE,
 
             "password.required" => Errors::PASSWORD_REQUIRED,
-            "password.string" => Errors::PASSWORD_STRING
+            "password.string" => Errors::PASSWORD_STRING,
+
+            "confirm_password.required" => Errors::CONFIRM_PASSWORD_REQUIRED,
+            "confirm_password.string" => Errors::PASSWORD_STRING,
+
+            "confirm_password.same" => Errors::CONFIRM_PASSWORD_SAME,
 
         ];
     }
