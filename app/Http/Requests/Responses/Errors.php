@@ -18,4 +18,5 @@ class Errors
 
     const CONFIRM_PASSWORD_REQUIRED = ["cod" => "E-11", "msg" => "Tiene que confirmar La contraseña"];
     const CONFIRM_PASSWORD_SAME = ["cod" => "E-12", "msg" => "Al confirmar La contraseña deberia de ser la misma que La contraseña principal"];
+    const USER_NOT_FOUNT = ["cod" => "E-12", "msg" => "El usuario no tiene una cuenta creada en el sistema"];
 }

@@ -14,10 +14,11 @@ Route::get("test", function() {
 //Registro de usuarios de la forma basica de authentication.
 Route::post('register', [BasicAuthController::class, "register"]);
 Route::post('login', [BasicAuthController::class, "login"]);
+
 //Registro de usuarios con los servicios de Google.
-Route::get('auth', [GoogleAuthController::class, 'redirectToAuth']);
-Route::get('auth/callback', [GoogleAuthController::class, 'handleAuthCallback']);
+// Route::get('auth', [GoogleAuthController::class, 'redirectToAuth']);
+// Route::get('auth/callback', [GoogleAuthController::class, 'handleAuthCallback']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::post('/logout', [BasicAuthController::class, "logout"]);
 });

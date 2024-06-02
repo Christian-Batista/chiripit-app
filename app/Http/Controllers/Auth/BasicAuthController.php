@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Services\Authentication\BasicAuthService;
 use App\Http\Requests\Auth\BasicLoginRequestValidator;
 use App\Http\Requests\Auth\BasicRegisterRequestValidator;
-use App\Services\Authentication\BasicAuthService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class BasicAuthController extends Controller
 {
@@ -38,6 +39,20 @@ class BasicAuthController extends Controller
         $basicLogin = $this->basicAuthService->basicLogin($request);
 
         return response()->json($basicLogin, 200);
+    }
+
+     /**
+     * Logout the user (Invalidate the token).
+     */
+    public function logout(Request $request): JsonResponse
+    {
+        // Revoke the token that was used to authenticate the current request
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Successfully logged out',
+        ]);
     }
 
 }

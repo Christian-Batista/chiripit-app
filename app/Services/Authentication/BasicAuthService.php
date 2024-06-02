@@ -41,8 +41,8 @@ class BasicAuthService
          if (!Auth::attempt($credentials->all())) {
             return [
                 "response" => [
-                    "cod" => Errors::LOGIN_FAIL["cod"],
-                    "msg" => Errors::LOGIN_FAIL["msg"],
+                    "cod" => Errors::USER_NOT_FOUNT["cod"],
+                    "msg" => Errors::USER_NOT_FOUNT["msg"],
                     "token" => null
                 ]
 
@@ -60,4 +60,6 @@ class BasicAuthService
             ]
         ];
     }
+
+    // public function basicLogout()
 }
