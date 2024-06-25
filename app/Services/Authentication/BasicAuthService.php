@@ -2,6 +2,7 @@
 
 namespace App\Services\Authentication;
 
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Responses\Errors;
@@ -9,18 +10,16 @@ use App\Http\Requests\Responses\Success;
 
 class BasicAuthService
 {
-    protected $userRepository;
-
-    public function __construct(
-        UserRepository $userRepository
-    )
-    {
-        $this->userRepository = $userRepository;
-    }
     public function basicRegister($newUser): array
     {
+        $newUser = [
+            "name" => $newUser->name,
+            "last_name" => $newUser->last_name,
+            "email" => $newUser->email,
+            "password" => $newUser->password,
+        ];
         //registro al nuevo usuario.
-        $createdUser = $this->userRepository->create($newUser->all());
+        $createdUser = User::create($newUser);
 
         //logueo al nuevo usuario.
         Auth::login($createdUser);
@@ -28,11 +27,9 @@ class BasicAuthService
         $token = $createdUser->createToken('TokenName')->plainTextToken;
 
         return [
-            "response" => [
-                "cod" => Success::CREATED["cod"],
-                "msg" => Success::CREATED["msg"],
-                "token" => $token
-            ]
+            "cod" => Success::CREATED["cod"],
+            "msg" => Success::CREATED["msg"],
+            "token" => $token
         ];
     }
 

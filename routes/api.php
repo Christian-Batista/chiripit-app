@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Auth\BasicAuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 //Testear la api de forma facil
@@ -19,6 +20,10 @@ Route::post('login', [BasicAuthController::class, "login"]);
 // Route::get('auth', [GoogleAuthController::class, 'redirectToAuth']);
 // Route::get('auth/callback', [GoogleAuthController::class, 'handleAuthCallback']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+// Rutas protegidas por el middleware auth:sanctum
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('user')->group(function() {
+        Route::patch('update', [UserController::class, 'update']);
+    });
     Route::post('/logout', [BasicAuthController::class, "logout"]);
 });
