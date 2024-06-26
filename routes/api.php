@@ -6,15 +6,15 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Auth\BasicAuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 //Testear la api de forma facil
-Route::get("test", function() {
+Route::get('test', function() {
     return response()->json([
-        "message" => "Conexion Exitosa"
+        'message' => 'Conexion Exitosa'
     ]);
 });
 
 //Registro de usuarios de la forma basica de authentication.
-Route::post('register', [BasicAuthController::class, "register"]);
-Route::post('login', [BasicAuthController::class, "login"]);
+Route::post('register', [BasicAuthController::class, 'register']);
+Route::post('login', [BasicAuthController::class, 'login']);
 
 //Registro de usuarios con los servicios de Google.
 // Route::get('auth', [GoogleAuthController::class, 'redirectToAuth']);
@@ -23,7 +23,8 @@ Route::post('login', [BasicAuthController::class, "login"]);
 // Rutas protegidas por el middleware auth:sanctum
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('user')->group(function() {
-        Route::patch('update', [UserController::class, 'update']);
+        Route::patch('update/{user_id}', [UserController::class, 'update']);
+        Route::delete('delete/{user_id}', [UserController::class, 'delete']);
     });
-    Route::post('/logout', [BasicAuthController::class, "logout"]);
+    Route::post('/logout', [BasicAuthController::class, 'logout']);
 });

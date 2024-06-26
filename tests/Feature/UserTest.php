@@ -64,8 +64,8 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
-        $url = 'api/user/update';
-        $response = $this->patchJson($url, [
+        $url = 'api/user/update/';
+        $response = $this->patchJson($url.$user->id, [
             'name' => 'miguel',
             'last_name' => 'batista'
         ]);
@@ -82,7 +82,37 @@ class UserTest extends TestCase
             'email' => $user->email,
         ]);
 
-        $this->assertTrue(Hash::check($user->password, $user->password));
+        $response->assertJsonStructure([
+            'cod',
+            'msg',
+            'data'
+        ]);
+    }
+
+    /**
+     * A basic feature test example.
+     */
+    public function test_user_can_be_deleted(): void
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        $url = 'api/user/delete/';
+        $response = $this->delete($url.$user->id);
+
+        if ($response->status() !== 200) {
+            dd($response->exception->getMessage());
+        }
+
+        $response->assertStatus(200);
+
+        $deleted = User::find($user->id);
+        $this->assertNull($deleted);
+
+        $response->assertJsonStructure([
+            'cod',
+            'msg',
+        ]);
     }
 
 }
