@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('google_id')->nullable(); // Added
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
