@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Services\UserServices\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserController extends Controller
 {
@@ -14,6 +13,18 @@ class UserController extends Controller
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
+    }
+
+    public function get(): JsonResponse
+    {
+        $response = $this->userService->getUsers();
+        return response()->json($response);
+    }
+
+    public function getById($user_id): JsonResponse
+    {
+        $response = $this->userService->getUserById($user_id);
+        return response()->json($response);
     }
     public function update(Request $request, $userId): JsonResponse
     {

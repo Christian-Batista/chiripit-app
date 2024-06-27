@@ -8,6 +8,39 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserService
 {
+
+    /**
+     * Method to get user information
+     *
+     * return array
+     */
+    public function getUsers(): array
+    {
+        $users = User::all();
+
+        return [
+            'cod' => Success::FOUND['cod'],
+            'msg' => Success::FOUND['msg'],
+            'data' => $users
+        ];
+    }
+
+    /**
+     * Method to get user information
+     *
+     * return array
+     */
+    public function getUserById($user_id): array
+    {
+        $user = User::find($user_id);
+        
+        return [
+            'cod' => Success::FOUND['cod'],
+            'msg' => Success::FOUND['msg'],
+            'data' => $user
+        ];
+    }
+
     /**
      * Method to update user information
      *
