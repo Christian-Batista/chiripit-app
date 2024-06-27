@@ -8,4 +8,5 @@ class Success
     const LOGGED_IN = ['cod' => 'S-01', 'msg' => 'Usuario logueado correctamente.'];
     const UPDATED = ['cod' => 'S-02', 'msg' => 'Registro actualizado.'];
     const DELETED = ['cod' => 'S-03', 'msg' => 'Registro Borrado.'];
+    const FOUND = ['cod' => 'S-04', 'msg' => 'Registro encontrado'];
 }
