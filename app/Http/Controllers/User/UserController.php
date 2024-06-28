@@ -17,15 +17,10 @@ class UserController extends Controller
 
     public function get(): JsonResponse
     {
-        $response = $this->userService->getUsers();
+        $response = $this->userService->getUser();
         return response()->json($response);
     }
 
-    public function getById($user_id): JsonResponse
-    {
-        $response = $this->userService->getUserById($user_id);
-        return response()->json($response);
-    }
     public function update(Request $request, $userId): JsonResponse
     {
         $response = $this->userService->updateUser($request->all(), $userId);

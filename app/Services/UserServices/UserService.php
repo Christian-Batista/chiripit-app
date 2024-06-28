@@ -3,6 +3,7 @@
 namespace App\Services\UserServices;
 
 use App\Models\User;
+use App\Http\Requests\Responses\Errors;
 use App\Http\Requests\Responses\Success;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -14,30 +15,20 @@ class UserService
      *
      * return array
      */
-    public function getUsers(): array
+    public function getUser(): array
     {
-        $users = User::all();
+        $user = auth()->user();
 
+        if ($user) {
+            return [
+                'cod' => Success::FOUND['cod'],
+                'msg' => Success::FOUND['msg'],
+                'data' => $user
+            ];
+        }
         return [
-            'cod' => Success::FOUND['cod'],
-            'msg' => Success::FOUND['msg'],
-            'data' => $users
-        ];
-    }
-
-    /**
-     * Method to get user information
-     *
-     * return array
-     */
-    public function getUserById($user_id): array
-    {
-        $user = User::find($user_id);
-        
-        return [
-            'cod' => Success::FOUND['cod'],
-            'msg' => Success::FOUND['msg'],
-            'data' => $user
+            'cod' => Errors::USER_NOT_FOUNT['cod'],
+            'msg' => Errors::USER_NOT_FOUNT['msg'],
         ];
     }
 
@@ -47,16 +38,25 @@ class UserService
      * @param User $name, $last_name
      * @return array
      */
-    public function updateUser($userInfo, $userId): array
+    public function updateUser(array $userInfo): array
     {
-        $user = User::findOrFail($userId);
-        $user->update($userInfo);
+        $user = auth()->user();
+        if ($user) {
+            $user->update($userInfo);
+
+            return [
+                'cod' => Success::UPDATED['cod'],
+                'msg' => Success::UPDATED['msg'],
+                'data' => $user
+            ];
+        }
 
         return [
-            'cod' => Success::UPDATED['cod'],
-            'msg' => Success::UPDATED['msg'],
-            'data' => $user
+            'cod' => Errors::USER_NOT_FOUNT['cod'],
+            'msg' => Errors::USER_NOT_FOUNT['msg'],
         ];
+
+        
     }
 
     /**
@@ -69,7 +69,7 @@ class UserService
     {
         try {
             // Find the user by ID
-            $user = User::findOrFail($userId);
+            $user = auth()->user();
 
             // Soft delete the user
             $user->delete();

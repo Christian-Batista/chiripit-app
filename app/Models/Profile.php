@@ -16,7 +16,7 @@ class Profile extends Model
         'location',
         'phone_number',
         'bio',
-        'user_id',
+        'availability',
     ];
 
     public function user()

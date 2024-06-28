@@ -143,24 +143,24 @@ class UserTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_user_can_be_extracted_by_id(): void
-    {
-        $user = User::factory()->create();
-        Sanctum::actingAs($user);
+    // public function test_user_can_be_extracted_by_id(): void
+    // {
+    //     $user = User::factory()->create();
+    //     Sanctum::actingAs($user);
     
-        $url = 'api/user/get/';
-        $response = $this->get($url.$user->id);
+    //     $url = 'api/user/get/';
+    //     $response = $this->get($url.$user->id);
 
-        if ($response->status() !== 200) {
-            dd($response->exception->getMessage());
-        }
-        $response->assertStatus(200);
+    //     if ($response->status() !== 200) {
+    //         dd($response->exception->getMessage());
+    //     }
+    //     $response->assertStatus(200);
 
-        $response->assertJsonStructure([
-            'cod',
-            'msg',
-            'data'
-        ]);
-    }
+    //     $response->assertJsonStructure([
+    //         'cod',
+    //         'msg',
+    //         'data'
+    //     ]);
+    // }
 
 }
