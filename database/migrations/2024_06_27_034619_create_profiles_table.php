@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('bio')->nullable();
+            $table->boolean('availability')->default(false);
+            
             $table->timestamps();
         });
     }
