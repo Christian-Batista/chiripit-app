@@ -65,7 +65,7 @@ class UserService
      * @param int $userId
      * @return array
      */
-    public function deleteUser(int $userId): array
+    public function deleteUser(): array
     {
         try {
             // Find the user by ID

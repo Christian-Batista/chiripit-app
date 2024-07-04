@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('profile_id');
             $table->foreignId('service_id');
             $table->string('experience');
-            $table->string('availability');
+            $table->string('certification');
             $table->timestamps();
         });
     }
