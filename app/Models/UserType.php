@@ -12,4 +12,9 @@ class UserType extends Model
     protected $fillable = [
         'type_name'
     ];
+
+    public function profiles()
+    {
+        $this->hasMany(Profile::class);
+    }
 }

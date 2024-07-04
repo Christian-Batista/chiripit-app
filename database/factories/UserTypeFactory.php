@@ -17,11 +17,11 @@ class UserTypeFactory extends Factory
     public function definition(): array
     {
         $types = [
-            'usuario' => 'usuario',
-            'proveedor' => 'proveedor'
+            'usuario',
+            'proveedor'
         ];
         return [
-            'type_name' => array_rand($types)
+            'type_name' => $this->faker->randomElement($types),
         ];
     }
 }

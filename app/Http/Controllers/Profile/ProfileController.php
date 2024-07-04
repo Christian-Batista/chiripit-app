@@ -21,4 +21,10 @@ class ProfileController extends Controller
         $response = $this->profileService->createNormalUserProfile($profileInformation);
         return response()->json($response);
     }
+
+    public function update(Request $request): JsonResponse
+    {
+        $response = $this->profileService->updateUser($request->all());
+        return response()->json($response);
+    }
 }

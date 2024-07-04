@@ -48,6 +48,32 @@ class ProfileService
         ];
     }
 
+    public function updateUser($newProfileInformation): array
+    {
+        $user = auth()->user();
+        $profile = $user->profile;
+        
+        if (isset($newProfileInformation['profile_picture'])) {
+            $newImage = $this->processImage($newProfileInformation['profile_picture']);
+            if ($profile->profile_picture) {
+                Storage::disk('public')->delete($profile->profile_picture);
+            }
+            $profile->profile_picture = $newImage;
+        }
+
+        $profile->update([
+            'location' => $newProfileInformation['location'] ?? $profile->location,
+            'phone_number' => $newProfileInformation['phone_number'] ?? $profile->phone_number,
+            'bio' => $newProfileInformation['bio'] ?? $profile->bio,
+            'availability' => $newProfileInformation['availability'] ?? $profile->availability,
+        ]);
+        return [
+            'cod' => Success::UPDATED['cod'],
+            'msg' => Success::UPDATED['msg'],
+            'data' => $profile
+        ];
+    }
+
     private function processImage($image)
     {
 

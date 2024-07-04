@@ -30,13 +30,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('user')->group(function() {
         Route::get('get/', [UserController::class, 'get']);
         Route::get('get/{user_id}', [UserController::class, 'getById']);
-        Route::patch('update/{user_id}', [UserController::class, 'update']);
-        Route::delete('delete/{user_id}', [UserController::class, 'delete']);
+        Route::patch('update/', [UserController::class, 'update']);
+        Route::delete('delete/', [UserController::class, 'delete']);
         
     });
 
     Route::prefix('profile')->group(function() {
         Route::post('create', [ProfileController::class, 'create']);
+        Route::patch('update', [ProfileController::class, 'update']);
     });
 
     Route::prefix('user-type')->group(function() {

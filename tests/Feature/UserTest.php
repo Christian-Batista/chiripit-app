@@ -65,7 +65,7 @@ class UserTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs($user);
         $url = 'api/user/update/';
-        $response = $this->patchJson($url.$user->id, [
+        $response = $this->patchJson($url, [
             'name' => 'miguel',
             'last_name' => 'batista'
         ]);
@@ -98,7 +98,7 @@ class UserTest extends TestCase
         Sanctum::actingAs($user);
 
         $url = 'api/user/delete/';
-        $response = $this->delete($url.$user->id);
+        $response = $this->delete($url);
 
         if ($response->status() !== 200) {
             dd($response->exception->getMessage());
