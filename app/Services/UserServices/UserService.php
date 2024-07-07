@@ -67,29 +67,15 @@ class UserService
      */
     public function deleteUser(): array
     {
-        try {
-            // Find the user by ID
-            $user = auth()->user();
+        $user = auth()->user();
+        // Soft delete the user
+        
+        $user->delete();
 
-            // Soft delete the user
-            $user->delete();
+        return [
+            'cod' => Success::DELETED['cod'],
+            'msg' => Success::DELETED['msg']
+        ];
 
-            return [
-                'cod' => Success::DELETED['cod'],
-                'msg' => Success::DELETED['msg']
-            ];
-        } catch (ModelNotFoundException $e) {
-            // Handle case where user is not found
-            return [
-                'cod' => 404,
-                'msg' => 'User not found'
-            ];
-        } catch (\Exception $e) {
-            // Handle other exceptions
-            return [
-                'cod' => 500,
-                'msg' => 'An error occurred while deleting the user'
-            ];
-        }
     }
 }

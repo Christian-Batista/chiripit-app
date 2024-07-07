@@ -24,6 +24,16 @@ class ProfileService
         
     }
 
+    public function getProfile(): array
+    {
+        $profile = auth()->user()->profile;
+        return [
+            'cod' => Success::FOUND['cod'],
+            'msg' => Success::FOUND['msg'],
+            'data' => $profile
+        ];
+    }
+
     public function createNormalUserProfile(ProfileData $profileInformation): array
     {
         $user = auth()->user();

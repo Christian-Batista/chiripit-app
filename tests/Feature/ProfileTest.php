@@ -176,4 +176,60 @@ class ProfileTest extends TestCase
         \Storage::disk('public')->assertExists($image);
         
     }
+
+    /**
+     * test profile doft delete
+     */
+    public function test_system_can_soft_deletes_a_user_and_their_profile()
+    {
+        $this->seed(UserTypeSeeder::class);
+        $userType = UserType::where('type_name', 'usuario')->first();
+
+        // Create a user and profile
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $profile = Profile::factory()->create([
+            'user_id' => $user->id,
+            'user_type_id' => $userType->id,
+        ]);
+
+        // Soft delete the user
+        $user->delete();
+
+        // Assert soft deletion
+        $this->assertSoftDeleted('users', ['id' => $user->id]);
+        $this->assertSoftDeleted('profiles', ['id' => $profile->id]);
+    }
+
+    /**
+     * Test to extract profile information
+     */
+    public function test_system_can_extract_profile_information(): void
+    {
+        $this->seed(UserTypeSeeder::class);
+        $userType = UserType::where('type_name', 'proveedor')->first();
+
+        // Create a user and profile
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $profile = Profile::factory()->create([
+            'user_id' => $user->id,
+            'user_type_id' => $userType->id,
+        ]);
+        
+        $URL = 'api/profile/get';
+        $response = $this->get($URL);
+
+        if ($response->status() !== 200) {
+            dd($response->exception->getMessage());
+        }
+
+        $response->assertStatus(200);
+
+        $response->assertJsonStructure([
+            'cod',
+            'msg',
+            'data'
+        ]);
+    }
 }
