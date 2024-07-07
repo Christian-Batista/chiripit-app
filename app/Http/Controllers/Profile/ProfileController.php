@@ -15,6 +15,12 @@ class ProfileController extends Controller
     {
         $this->profileService = $profileService;
     }
+
+    public function get(): JsonResponse
+    {
+        $response = $this->profileService->getProfile();
+        return response()->json($response);
+    }
     public function create(StoreProfileRequest $request): JsonResponse
     {
         $profileInformation = $request->toProfileDataRequest();

@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_type_id')->constrained();
             $table->string('profile_picture')->nullable();
             $table->string('location')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('bio')->nullable();
             $table->boolean('availability')->nullable();
-            
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

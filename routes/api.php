@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('profile')->group(function() {
+        Route::get('get', [ProfileController::class, 'get']);
         Route::post('create', [ProfileController::class, 'create']);
         Route::patch('update', [ProfileController::class, 'update']);
     });
