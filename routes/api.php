@@ -3,10 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\UserTypeController;
 use App\Http\Controllers\Auth\BasicAuthController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Profile\ProfileController;
-use App\Http\Controllers\User\UserTypeController;
+use App\Http\Controllers\Category\CategoryController;
 
 //Testear la api de forma facil
 Route::get('test', function() {
@@ -26,6 +27,17 @@ Route::post('login', [BasicAuthController::class, 'login']);
 // Rutas protegidas por el middleware auth:sanctum
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [BasicAuthController::class, 'logout']);
+
+    Route::prefix('user-type')->group(function() {
+        Route::post('create', [UserTypeController::class, 'create']);
+        //Route::get('get', [UserTypeController::class, 'get']);
+    });
+
+    Route::prefix('category')->group(function() {
+        Route::post('create', [CategoryController::class, 'create']);
+        Route::put('update/{category_id}', [CategoryController::class, 'update']);
+        //Route::get('get', [UserTypeController::class, 'get']);
+    });
     
     Route::prefix('user')->group(function() {
         Route::get('get/', [UserController::class, 'get']);
@@ -41,8 +53,5 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('update', [ProfileController::class, 'update']);
     });
 
-    Route::prefix('user-type')->group(function() {
-        Route::post('create', [UserTypeController::class, 'create']);
-        //Route::get('get', [UserTypeController::class, 'get']);
-    });
+    
 });
