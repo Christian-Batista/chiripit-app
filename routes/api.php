@@ -30,13 +30,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('user-type')->group(function() {
         Route::post('create', [UserTypeController::class, 'create']);
-        //Route::get('get', [UserTypeController::class, 'get']);
     });
 
     Route::prefix('category')->group(function() {
+        Route::get('get/{category_id}', [CategoryController::class, 'get']);
         Route::post('create', [CategoryController::class, 'create']);
         Route::put('update/{category_id}', [CategoryController::class, 'update']);
-        //Route::get('get', [UserTypeController::class, 'get']);
+        Route::delete('delete/{category_id}', [CategoryController::class, 'delete']);
     });
     
     Route::prefix('user')->group(function() {
@@ -52,6 +52,4 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('create', [ProfileController::class, 'create']);
         Route::patch('update', [ProfileController::class, 'update']);
     });
-
-    
 });
