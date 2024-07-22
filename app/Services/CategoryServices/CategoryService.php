@@ -8,6 +8,16 @@ use App\Http\Requests\Category\CategoryCreateRequest;
 
 class CategoryService
 {
+
+    public function getCategory(): array
+    {
+        $categories =  Category::all();
+        return [
+            'cod' => '',
+            'msg' => '',
+            'data' => $categories
+        ];
+    }
     public function createCategory(CategoryCreateRequest $category): array
     {
         Category::create([
@@ -31,6 +41,16 @@ class CategoryService
         return [
             'cod' => Success::UPDATED['cod'],
             'msg' => Success::UPDATED['msg'],
+        ];
+    }
+
+    public function deleteCategory(int $categoryId): array
+    {
+        $categoryToDelete = Category::findOrFail($categoryId);
+        $categoryToDelete->delete();
+        return [
+            'cod' => Success::DELETED['cod'],
+            'msg' => Success::DELETED['msg'],
         ];
     }
 }

@@ -17,7 +17,13 @@ class CategoryController extends Controller
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
-    }   
+    }
+
+    public function get(): JsonResponse
+    {
+        $response = $this->categoryService->getCategory();
+        return response()->json($response);
+    }
     public function create(CategoryCreateRequest $request): JsonResponse
     {
         $response = $this->categoryService->createCategory($request);
@@ -27,6 +33,12 @@ class CategoryController extends Controller
     public function update(CategoryUpdateRequest $request, $categoryId): JsonResponse
     {
         $response = $this->categoryService->updateCategory($request, $categoryId);
+        return response()->json($response);
+    }
+
+    public function delete(int $categoryId): JsonResponse
+    {
+        $response = $this->categoryService->deleteCategory($categoryId);
         return response()->json($response);
     }
 }
