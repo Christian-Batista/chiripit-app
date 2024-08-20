@@ -23,30 +23,27 @@ class CategoryTest extends TestCase
     public function test_system_can_create_category(): void
     {
         $this->seed(UserTypeSeeder::class);
-        $userType = UserType::where('type_name', 'proveedor')->first();
+        $userType = UserType::where("type_name", "proveedor")->first();
 
         $user = User::factory()->create();
         Sanctum::actingAs($user);
         $profile = Profile::factory()->create([
-            'user_id' => $user->id,
-            'user_type_id' => $userType->id
+            "user_id" => $user->id,
+            "user_type_id" => $userType->id,
         ]);
 
         $categoryRequest = [
-            'category_name' => 'Lavado de vehiculos'
+            "category_name" => "Lavado de vehiculos",
         ];
-        $URL = 'api/category/create';
+        $URL = "api/category/create";
         $response = $this->postJson($URL, $categoryRequest);
 
         if ($response->status() !== 200) {
             dd($response->exception->getMessage());
         }
         $response->assertStatus(200);
-        $this->assertDatabaseHas('categories', $categoryRequest);
-        $response->assertJsonStructure([
-            'cod',
-            'msg'
-        ]);
+        $this->assertDatabaseHas("categories", $categoryRequest);
+        $response->assertJsonStructure(["cod", "msg"]);
     }
 
     /**
@@ -56,34 +53,34 @@ class CategoryTest extends TestCase
     {
         $this->seed(UserTypeSeeder::class);
         $this->seed(CategorySeeder::class);
-        $userType = UserType::where('type_name', 'proveedor')->first();
+        $userType = UserType::where("type_name", "proveedor")->first();
 
         $user = User::factory()->create();
         Sanctum::actingAs($user);
         $profile = Profile::factory()->create([
-            'user_id' => $user->id,
-            'user_type_id' => $userType->id
+            "user_id" => $user->id,
+            "user_type_id" => $userType->id,
         ]);
-        $category = Category::where('category_name', 'Lavado de Vehiculos')->first();
+        $category = Category::where(
+            "category_name",
+            "Lavado de Vehiculos"
+        )->first();
 
         $categoryRequest = [
-            'category_name' => 'Plomería'
+            "category_name" => "Plomería",
         ];
-        $URL = 'api/category/update/';
-        $response = $this->putJson($URL.$category->id, $categoryRequest);
+        $URL = "api/category/update/";
+        $response = $this->putJson($URL . $category->id, $categoryRequest);
 
         if ($response->status() !== 200) {
             dd($response->exception->getMessage());
         }
         $response->assertStatus(200);
-        $this->assertDatabaseHas('categories', [
-            'id' => $category->id,
-            'category_name' => $categoryRequest['category_name']
+        $this->assertDatabaseHas("categories", [
+            "id" => $category->id,
+            "category_name" => $categoryRequest["category_name"],
         ]);
-        $response->assertJsonStructure([
-            'cod',
-            'msg'
-        ]);
+        $response->assertJsonStructure(["cod", "msg"]);
     }
 
     /**
@@ -93,24 +90,27 @@ class CategoryTest extends TestCase
     {
         $this->seed(UserTypeSeeder::class);
         $this->seed(CategorySeeder::class);
-        $userType = UserType::where('type_name', 'proveedor')->first();
+        $userType = UserType::where("type_name", "proveedor")->first();
 
         $user = User::factory()->create();
         Sanctum::actingAs($user);
         $profile = Profile::factory()->create([
-            'user_id' => $user->id,
-            'user_type_id' => $userType->id
+            "user_id" => $user->id,
+            "user_type_id" => $userType->id,
         ]);
-        $category = Category::where('category_name', 'Lavado de Vehiculos')->first();
-        $URL = 'api/category/delete/';
-        $response = $this->delete($URL.$category->id);
+        $category = Category::where(
+            "category_name",
+            "Lavado de Vehiculos"
+        )->first();
+        $URL = "api/category/delete/";
+        $response = $this->delete($URL . $category->id);
 
         if ($response->status() !== 200) {
             dd($response->exception->getMessage());
         }
         $response->assertStatus(200);
         // Assert the user is not in the 'active' users list
-        $this->assertDatabaseMissing('categories', ['id' => $category->id]);
+        $this->assertDatabaseMissing("categories", ["id" => $category->id]);
     }
 
     /**
@@ -122,19 +122,16 @@ class CategoryTest extends TestCase
 
         $category = Category::inRandomOrder()->first();
 
-         $user = User::factory()->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
 
-         $URL = 'api/category/get/';
-         $response = $this->get($URL.$category->id);
+        $URL = "api/category/get/";
+        $response = $this->get($URL . $category->id);
 
-         if ($response->status() !== 200) {
+        if ($response->status() !== 200) {
             dd($response->exception->getMessage());
-         }
+        }
 
-         $response->assertJsonStructure([
-            'cod',
-            'msg',
-            'data'
-         ]);
+        $response->assertJsonStructure(["cod", "msg", "data"]);
     }
 }
