@@ -18,7 +18,7 @@ Route::get('test', function() {
 
 //Registro de usuarios de la forma basica de authentication.
 Route::post('register', [BasicAuthController::class, 'register']);
-Route::post('login', [BasicAuthController::class, 'login']);
+Route::post('login', [BasicAuthController::class, 'login'])->name('login');
 
 //Registro de usuarios con los servicios de Google.
 // Route::get('auth', [GoogleAuthController::class, 'redirectToAuth']);
