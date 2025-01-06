@@ -12,7 +12,7 @@ class ProfileData
 
     public function __construct(array $data) 
     {
-        $this->profilePicture = $data['profile_picture'];
+        $this->profilePicture = $data['profile_picture'] ?? null;
         $this->location = $data['location'] ?? null;
         $this->phone_number = $data['phone_number'] ?? null;
         $this->bio = $data['bio'] ?? null;
